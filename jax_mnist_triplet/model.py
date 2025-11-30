@@ -2,6 +2,7 @@ import jax
 import jax.numpy as jnp
 from flax import linen as nn
 
+
 class EmbeddingNet(nn.Module):
     embedding_dim: int
 
@@ -28,24 +29,27 @@ class EmbeddingNet(nn.Module):
         x = x / jnp.linalg.norm(x, axis=-1, keepdims=True)
         return x
 
+
 # --- 3. Loss & Update Steps ---
+
 
 def triplet_loss_fn(anchor_emb, positive_emb, negative_emb, margin=0.2):
     # Squared Euclidean Distance
-    pos_dist = jnp.sum((anchor_emb - positive_emb)**2, axis=-1)
-    neg_dist = jnp.sum((anchor_emb - negative_emb)**2, axis=-1)
+    pos_dist = jnp.sum((anchor_emb - positive_emb) ** 2, axis=-1)
+    neg_dist = jnp.sum((anchor_emb - negative_emb) ** 2, axis=-1)
 
     # Max(d(a,p) - d(a,n) + margin, 0)
     loss = jnp.maximum(pos_dist - neg_dist + margin, 0.0)
     return jnp.mean(loss)
 
+
 @jax.jit
 def train_step(state, anchor_img, positive_img, negative_img):
     def loss_fn(params):
         # Forward pass for all three heads (Siamese Network style)
-        a_emb = state.apply_fn({'params': params}, anchor_img)
-        p_emb = state.apply_fn({'params': params}, positive_img)
-        n_emb = state.apply_fn({'params': params}, negative_img)
+        a_emb = state.apply_fn({"params": params}, anchor_img)
+        p_emb = state.apply_fn({"params": params}, positive_img)
+        n_emb = state.apply_fn({"params": params}, negative_img)
 
         loss = triplet_loss_fn(a_emb, p_emb, n_emb)
         return loss

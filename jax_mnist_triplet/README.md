@@ -6,19 +6,18 @@ Overview
 - `checkpoints.py`: helper utilities to list, load, and save checkpoints.
 - `visualize.py`: loads the most recent checkpoint (or you can call `checkpoints.load_model` yourself), computes embeddings for the MNIST test set, and produces a 3D Plotly visualization saved as `embeddings.html`.
 
-Quick requirements
+Setup
 
-Create a virtual environment and install dependencies from `requirements.txt`:
+Create a virtual environment and install dependencies using `uv`:
 
 ```bash
-python -m venv .venv
+uv venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+uv pip install .
 ```
 
 Notes:
-- The repo includes `requirements.txt` with the minimal dependencies used by these scripts.
+- Dependencies are defined in `pyproject.toml`.
 - If you want to force JAX to CPU-only for debugging, either set the environment variable before running or use the existing code that sets it inside the scripts:
   - `export JAX_PLATFORM_NAME=cpu`
   - OR the code already sets `os.environ['JAX_PLATFORM_NAME']='cpu'` at the top of `train.py` and `visualize.py`.

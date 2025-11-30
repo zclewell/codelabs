@@ -1,0 +1,18 @@
+[project]
+name = "jax-mnist-triplet"
+version = "0.1.0"
+description = "Training a embedding model on the mnist dataset using jax and triplet loss"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flax>=0.12.1",
+    "jax>=0.8.1",
+    "jaxlib>=0.8.1",
+    "kaleido>=1.2.0",
+    "numpy>=2.3.5",
+    "optax>=0.2.6",
+    "plotly>=6.5.0",
+    "tensorflow>=2.20.0",
+    "tensorflow-datasets>=4.9.9",
+    "tqdm>=4.67.1",
+]

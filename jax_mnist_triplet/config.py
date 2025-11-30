@@ -1,1 +1,1 @@
-CHECKPOINT_DIR = '/tmp/checkpoints/'
+CHECKPOINT_DIR = "/tmp/checkpoints/"

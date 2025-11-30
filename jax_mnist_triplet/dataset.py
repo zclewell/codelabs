@@ -3,6 +3,7 @@ import jax.numpy as jnp
 import numpy as np
 import tensorflow as tf
 
+
 def get_mnist_triplet_generator(ds, batch_size=64):
     """
     Loads MNIST and creates a generator that yields batches of
@@ -47,10 +48,13 @@ def get_mnist_triplet_generator(ds, batch_size=64):
                 positives.append(data_by_label[anchor_label][idx2])
                 negatives.append(data_by_label[neg_label][idx3])
 
-            yield (jnp.array(anchors, dtype=np.float32), 
-                   jnp.array(positives, dtype=np.float32), 
-                   jnp.array(negatives, dtype=np.float32))
+            yield (
+                jnp.array(anchors, dtype=np.float32),
+                jnp.array(positives, dtype=np.float32),
+                jnp.array(negatives, dtype=np.float32),
+            )
 
     return generator
+
 
 # --- 2. Model Architecture (Flax) ---
